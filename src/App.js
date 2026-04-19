@@ -230,12 +230,14 @@ export default function Voetbal501() {
       const prompt = `Je bent spelleider van "Voetbal 501 - ${selectedClub.name} Editie".
 De speler heeft "${name}" ingevoerd.
 
-1. Controleer of deze persoon ooit voor ${selectedClub.name} heeft gespeeld (eerste elftal, officiele wedstrijden). Gebruik je meest recente kennis want spelers kunnen recent getransfereerd zijn.
-2. Als ja: geef het WERKELIJKE totale aantal officiele wedstrijden voor ${selectedClub.name}. Geef het echte getal, ook boven 180.
-3. Als niet voor ${selectedClub.name}: valid=false, matches=0.
+BELANGRIJK: Wees RUIMHARTIG bij het beoordelen. Als een speler mogelijk voor ${selectedClub.name} heeft gespeeld, kies dan voor valid=true. Twijfel je? Geef valid=true.
+
+1. Controleer of deze persoon ooit voor ${selectedClub.name} heeft gespeeld (eerste elftal, officiele wedstrijden, alle seizoenen ooit). Denk ook aan minder bekende of oudere spelers.
+2. Als ja of mogelijk ja: geef het geschatte totale aantal officiele wedstrijden voor ${selectedClub.name}. Geef het echte getal, ook boven 180. Als je het niet precies weet, geef dan een redelijke schatting.
+3. Alleen als je ZEKER weet dat de speler NOOIT voor ${selectedClub.name} heeft gespeeld: valid=false, matches=0.
 4. Geef bekendste shirtnummer bij ${selectedClub.name} en een leuke fact (max 8 woorden).
 Antwoord ALLEEN JSON (geen uitleg, geen markdown backticks):
-{"valid":true,"matches":42,"shirt":10,"fact":"Topscorer aller tijden bij de club"}
+{"valid":true,"matches":42,"shirt":10,"fact":"Snelle buitenspeler bekend om zijn dribbels"}
 of: {"valid":false,"matches":0,"shirt":null,"fact":""}` ;
 
       const apiKey = process.env.REACT_APP_ANTHROPIC_API_KEY;
