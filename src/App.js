@@ -238,20 +238,24 @@ Antwoord ALLEEN JSON (geen uitleg, geen markdown backticks):
 {"valid":true,"matches":42,"shirt":10,"fact":"Topscorer aller tijden bij de club"}
 of: {"valid":false,"matches":0,"shirt":null,"fact":""}` ;
 
-      const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: prompt }] }]
-          })
-        }
-      );
+      const apiKey = process.env.REACT_APP_ANTHROPIC_API_KEY;
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 300,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
       const data = await response.json();
       if (data.error) throw new Error(data.error.message);
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      const text = data.content?.map(i => i.text || "").join("") || "";
       const jsonMatch = text.match(/\{[\s\S]*?"valid"[\s\S]*?\}/);
       if (!jsonMatch) throw new Error("Geen JSON gevonden");
       processResult(JSON.parse(jsonMatch[0]), name);
