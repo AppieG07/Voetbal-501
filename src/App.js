@@ -8,7 +8,7 @@ const EREDIVISIE = [
   { name: "PSV", city: "Eindhoven", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/91.png" },
   { name: "Feyenoord", city: "Rotterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/87.png" },
   { name: "AZ", city: "Alkmaar", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/88.png" },
-  { name: "FC Twente", city: "Enschede", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/94.png" },
+  { name: "FC Twente", city: "Enschede", logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/152.png&h=200&w=200" },
   { name: "FC Utrecht", city: "Utrecht", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/93.png" },
   { name: "NEC", city: "Nijmegen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9913.png" },
   { name: "SC Heerenveen", city: "Heerenveen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/90.png" },
