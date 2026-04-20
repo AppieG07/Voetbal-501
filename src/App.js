@@ -4,47 +4,47 @@ import { useState, useRef } from "react";
 const logoUrl = (name) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=cc0000&color=fff&size=64&bold=true&font-size=0.4`;
 
 const EREDIVISIE = [
-  { name: "Ajax", city: "Amsterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/86.png" },
-  { name: "PSV", city: "Eindhoven", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/91.png" },
-  { name: "Feyenoord", city: "Rotterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/87.png" },
-  { name: "AZ", city: "Alkmaar", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/88.png" },
-  { name: "FC Twente", city: "Enschede", logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/152.png&h=200&w=200" },
-  { name: "FC Utrecht", city: "Utrecht", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/93.png" },
-  { name: "NEC", city: "Nijmegen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9913.png" },
-  { name: "SC Heerenveen", city: "Heerenveen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/90.png" },
-  { name: "FC Groningen", city: "Groningen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/89.png" },
-  { name: "Go Ahead Eagles", city: "Deventer", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9910.png" },
-  { name: "Heracles Almelo", city: "Almelo", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9914.png" },
-  { name: "NAC Breda", city: "Breda", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9917.png" },
-  { name: "PEC Zwolle", city: "Zwolle", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9918.png" },
-  { name: "Sparta Rotterdam", city: "Rotterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/92.png" },
-  { name: "Fortuna Sittard", city: "Sittard", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9911.png" },
-  { name: "FC Volendam", city: "Volendam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9921.png" },
-  { name: "RKC Waalwijk", city: "Waalwijk", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9919.png" },
-  { name: "Willem II", city: "Tilburg", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/95.png" },
+  { name: "Ajax", city: "Amsterdam", logo: "https://crests.football-data.org/674.svg" },
+  { name: "PSV", city: "Eindhoven", logo: "https://crests.football-data.org/678.svg" },
+  { name: "Feyenoord", city: "Rotterdam", logo: "https://crests.football-data.org/675.svg" },
+  { name: "AZ", city: "Alkmaar", logo: "https://crests.football-data.org/676.svg" },
+  { name: "FC Twente", city: "Enschede", logo: "https://crests.football-data.org/666.svg" },
+  { name: "FC Utrecht", city: "Utrecht", logo: "https://crests.football-data.org/683.svg" },
+  { name: "NEC", city: "Nijmegen", logo: "https://crests.football-data.org/285.svg" },
+  { name: "SC Heerenveen", city: "Heerenveen", logo: "https://crests.football-data.org/677.svg" },
+  { name: "FC Groningen", city: "Groningen", logo: "https://crests.football-data.org/340.svg" },
+  { name: "Go Ahead Eagles", city: "Deventer", logo: "https://crests.football-data.org/6806.svg" },
+  { name: "Heracles Almelo", city: "Almelo", logo: "https://crests.football-data.org/1925.svg" },
+  { name: "NAC Breda", city: "Breda", logo: "https://crests.football-data.org/6811.svg" },
+  { name: "PEC Zwolle", city: "Zwolle", logo: "https://crests.football-data.org/6812.svg" },
+  { name: "Sparta Rotterdam", city: "Rotterdam", logo: "https://crests.football-data.org/680.svg" },
+  { name: "Fortuna Sittard", city: "Sittard", logo: "https://crests.football-data.org/6807.svg" },
+  { name: "FC Volendam", city: "Volendam", logo: "https://crests.football-data.org/6808.svg" },
+  { name: "RKC Waalwijk", city: "Waalwijk", logo: "https://crests.football-data.org/6809.svg" },
+  { name: "Willem II", city: "Tilburg", logo: "https://crests.football-data.org/684.svg" },
 ];
 
 const EERSTE_DIVISIE = [
-  { name: "ADO Den Haag", city: "Den Haag", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9908.png" },
-  { name: "Almere City", city: "Almere", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/18634.png" },
-  { name: "SC Cambuur", city: "Leeuwarden", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9909.png" },
-  { name: "De Graafschap", city: "Doetinchem", logo: null },
-  { name: "FC Den Bosch", city: "Den Bosch", logo: null },
-  { name: "FC Dordrecht", city: "Dordrecht", logo: null },
-  { name: "FC Eindhoven", city: "Eindhoven", logo: null },
-  { name: "FC Emmen", city: "Emmen", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/18635.png" },
-  { name: "Excelsior", city: "Rotterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9916.png" },
-  { name: "Helmond Sport", city: "Helmond", logo: null },
-  { name: "MVV Maastricht", city: "Maastricht", logo: null },
-  { name: "Roda JC", city: "Kerkrade", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9920.png" },
-  { name: "Telstar", city: "Velsen-Zuid", logo: null },
-  { name: "TOP Oss", city: "Oss", logo: null },
-  { name: "VVV-Venlo", city: "Venlo", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/9922.png" },
-  { name: "Vitesse", city: "Arnhem", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/96.png" },
-  { name: "Jong Ajax", city: "Amsterdam", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/86.png" },
-  { name: "Jong PSV", city: "Eindhoven", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/91.png" },
-  { name: "Jong FC Utrecht", city: "Utrecht", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/93.png" },
-  { name: "Jong AZ", city: "Alkmaar", logo: "https://a.espncdn.com/i/teamlogos/soccer/500/88.png" },
+  { name: "ADO Den Haag", city: "Den Haag", logo: "https://crests.football-data.org/389.svg" },
+  { name: "Almere City", city: "Almere", logo: "https://crests.football-data.org/6813.svg" },
+  { name: "SC Cambuur", city: "Leeuwarden", logo: "https://crests.football-data.org/6814.svg" },
+  { name: "De Graafschap", city: "Doetinchem", logo: "https://crests.football-data.org/6815.svg" },
+  { name: "FC Den Bosch", city: "Den Bosch", logo: "https://crests.football-data.org/6816.svg" },
+  { name: "FC Dordrecht", city: "Dordrecht", logo: "https://crests.football-data.org/6817.svg" },
+  { name: "FC Eindhoven", city: "Eindhoven", logo: "https://crests.football-data.org/6818.svg" },
+  { name: "FC Emmen", city: "Emmen", logo: "https://crests.football-data.org/6819.svg" },
+  { name: "Excelsior", city: "Rotterdam", logo: "https://crests.football-data.org/679.svg" },
+  { name: "Helmond Sport", city: "Helmond", logo: "https://crests.football-data.org/6820.svg" },
+  { name: "MVV Maastricht", city: "Maastricht", logo: "https://crests.football-data.org/6821.svg" },
+  { name: "Roda JC", city: "Kerkrade", logo: "https://crests.football-data.org/6822.svg" },
+  { name: "Telstar", city: "Velsen-Zuid", logo: "https://crests.football-data.org/6823.svg" },
+  { name: "TOP Oss", city: "Oss", logo: "https://crests.football-data.org/6824.svg" },
+  { name: "VVV-Venlo", city: "Venlo", logo: "https://crests.football-data.org/6825.svg" },
+  { name: "Vitesse", city: "Arnhem", logo: "https://crests.football-data.org/682.svg" },
+  { name: "Jong Ajax", city: "Amsterdam", logo: "https://crests.football-data.org/674.svg" },
+  { name: "Jong PSV", city: "Eindhoven", logo: "https://crests.football-data.org/678.svg" },
+  { name: "Jong FC Utrecht", city: "Utrecht", logo: "https://crests.football-data.org/683.svg" },
+  { name: "Jong AZ", city: "Alkmaar", logo: "https://crests.football-data.org/676.svg" },
 ];
 
 const INITIAL_SCORE = 501;
@@ -287,32 +287,24 @@ of: {"valid":false,"matches":0,"shirt":null,"fact":""}` ;
     const newScores = [...scores];
     newScores[cur] = scores[cur] - matches;
 
-    if (newScores[cur] < 0) {
-      setFeedback({ type: "warning", text: `⚠️ Bust! ${name} (${matches}) gaat onder nul. Beurt naar ${playerNames[next]}.` });
-      setCurrent(next); return;
+    // Win check: huidige score IS het shirtnummer van de genoemde speler
+    if (result.shirt && scores[cur] === result.shirt) {
+      setScores(newScores);
+      setLog(prev => [{ player: cur, name, matches, shirt: result.shirt, fact: result.fact }, ...prev].slice(0, 10));
+      setWinner(cur);
+      setFeedback({ type: "win", text: `🏆 ${playerNames[cur]} WINT! ${name} droeg #${result.shirt} bij ${selectedClub.name}! 🎽` });
+      return;
     }
 
-    // Win check: eindig op exact 0 EN het resterende getal is het shirtnummer van deze speler
-    if (newScores[cur] === 0) {
-      if (result.shirt && scores[cur] === result.shirt) {
-        // Gewonnen! Score was exact het shirtnummer van deze speler
-        setScores(newScores);
-        setLog(prev => [{ player: cur, name, matches, shirt: result.shirt, fact: result.fact }, ...prev].slice(0, 10));
-        setWinner(cur);
-        setFeedback({ type: "win", text: `🏆 ${playerNames[cur]} WINT! ${name} droeg #${result.shirt} bij ${selectedClub.name} — exact op 0! 🎽` });
-        return;
-      } else {
-        // Exact 0 maar geen shirtnummer match — bust!
-        const shirtInfo = result.shirt ? `(shirtnummer was #${result.shirt}, niet #${scores[cur]})` : `(geen bekend shirtnummer)`;
-        setFeedback({ type: "warning", text: `⚠️ Bust! ${name} brengt je op 0, maar zijn shirtnummer klopt niet ${shirtInfo}. Beurt naar ${playerNames[next]}.` });
-        setCurrent(next);
-        return;
-      }
+    // Bust check: onder nul
+    if (newScores[cur] < 0) {
+      setFeedback({ type: "warning", text: `⚠️ Bust! ${name} (${matches} wedstrijden) gaat onder nul. Beurt naar ${playerNames[next]}.` });
+      setCurrent(next);
+      return;
     }
 
     setScores(newScores);
     setLog(prev => [{ player: cur, name, matches, shirt: result.shirt, fact: result.fact }, ...prev].slice(0, 10));
-
     setFeedback({ type: "success", text: `✅ ${name} — ${matches} wedstrijden voor ${selectedClub.name}! ${result.fact || ""}` });
     setCurrent(next);
   };
