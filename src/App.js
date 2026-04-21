@@ -1,73 +1,64 @@
 import { useState, useRef } from "react";
 
-// Logo's via een betrouwbare API die CORS ondersteunt
-const logoUrl = (name) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=cc0000&color=fff&size=64&bold=true&font-size=0.4`;
-
 const EREDIVISIE = [
-  { name: "Ajax", city: "Amsterdam", logo: "https://crests.football-data.org/674.svg" },
-  { name: "PSV", city: "Eindhoven", logo: "https://crests.football-data.org/678.svg" },
-  { name: "Feyenoord", city: "Rotterdam", logo: "https://crests.football-data.org/675.svg" },
-  { name: "AZ", city: "Alkmaar", logo: "https://crests.football-data.org/676.svg" },
-  { name: "FC Twente", city: "Enschede", logo: "https://crests.football-data.org/666.svg" },
-  { name: "FC Utrecht", city: "Utrecht", logo: "https://crests.football-data.org/683.svg" },
-  { name: "NEC", city: "Nijmegen", logo: "https://crests.football-data.org/285.svg" },
-  { name: "SC Heerenveen", city: "Heerenveen", logo: "https://crests.football-data.org/677.svg" },
-  { name: "FC Groningen", city: "Groningen", logo: "https://crests.football-data.org/340.svg" },
-  { name: "Go Ahead Eagles", city: "Deventer", logo: "https://crests.football-data.org/6806.svg" },
-  { name: "Heracles Almelo", city: "Almelo", logo: "https://crests.football-data.org/1925.svg" },
-  { name: "NAC Breda", city: "Breda", logo: "https://crests.football-data.org/6811.svg" },
-  { name: "PEC Zwolle", city: "Zwolle", logo: "https://crests.football-data.org/6812.svg" },
-  { name: "Sparta Rotterdam", city: "Rotterdam", logo: "https://crests.football-data.org/680.svg" },
-  { name: "Fortuna Sittard", city: "Sittard", logo: "https://crests.football-data.org/6807.svg" },
-  { name: "FC Volendam", city: "Volendam", logo: "https://crests.football-data.org/6808.svg" },
-  { name: "RKC Waalwijk", city: "Waalwijk", logo: "https://crests.football-data.org/6809.svg" },
-  { name: "Willem II", city: "Tilburg", logo: "https://crests.football-data.org/684.svg" },
+  { name: "Ajax", city: "Amsterdam", color: "cc0000" },
+  { name: "PSV", city: "Eindhoven", color: "cc0000" },
+  { name: "Feyenoord", city: "Rotterdam", color: "cc0000" },
+  { name: "AZ", city: "Alkmaar", color: "cc0000" },
+  { name: "FC Twente", city: "Enschede", color: "cc0000" },
+  { name: "FC Utrecht", city: "Utrecht", color: "cc0000" },
+  { name: "NEC", city: "Nijmegen", color: "006400" },
+  { name: "SC Heerenveen", city: "Heerenveen", color: "003399" },
+  { name: "FC Groningen", city: "Groningen", color: "006400" },
+  { name: "Go Ahead Eagles", city: "Deventer", color: "cc9900" },
+  { name: "Heracles Almelo", city: "Almelo", color: "333333" },
+  { name: "NAC Breda", city: "Breda", color: "cc9900" },
+  { name: "PEC Zwolle", city: "Zwolle", color: "003399" },
+  { name: "Sparta Rotterdam", city: "Rotterdam", color: "cc0000" },
+  { name: "Fortuna Sittard", city: "Sittard", color: "cc9900" },
+  { name: "FC Volendam", city: "Volendam", color: "ff6600" },
+  { name: "RKC Waalwijk", city: "Waalwijk", color: "cc9900" },
+  { name: "Willem II", city: "Tilburg", color: "cc0000" },
 ];
 
 const EERSTE_DIVISIE = [
-  { name: "ADO Den Haag", city: "Den Haag", logo: "https://crests.football-data.org/389.svg" },
-  { name: "Almere City", city: "Almere", logo: "https://crests.football-data.org/6813.svg" },
-  { name: "SC Cambuur", city: "Leeuwarden", logo: "https://crests.football-data.org/6814.svg" },
-  { name: "De Graafschap", city: "Doetinchem", logo: "https://crests.football-data.org/6815.svg" },
-  { name: "FC Den Bosch", city: "Den Bosch", logo: "https://crests.football-data.org/6816.svg" },
-  { name: "FC Dordrecht", city: "Dordrecht", logo: "https://crests.football-data.org/6817.svg" },
-  { name: "FC Eindhoven", city: "Eindhoven", logo: "https://crests.football-data.org/6818.svg" },
-  { name: "FC Emmen", city: "Emmen", logo: "https://crests.football-data.org/6819.svg" },
-  { name: "Excelsior", city: "Rotterdam", logo: "https://crests.football-data.org/679.svg" },
-  { name: "Helmond Sport", city: "Helmond", logo: "https://crests.football-data.org/6820.svg" },
-  { name: "MVV Maastricht", city: "Maastricht", logo: "https://crests.football-data.org/6821.svg" },
-  { name: "Roda JC", city: "Kerkrade", logo: "https://crests.football-data.org/6822.svg" },
-  { name: "Telstar", city: "Velsen-Zuid", logo: "https://crests.football-data.org/6823.svg" },
-  { name: "TOP Oss", city: "Oss", logo: "https://crests.football-data.org/6824.svg" },
-  { name: "VVV-Venlo", city: "Venlo", logo: "https://crests.football-data.org/6825.svg" },
-  { name: "Vitesse", city: "Arnhem", logo: "https://crests.football-data.org/682.svg" },
-  { name: "Jong Ajax", city: "Amsterdam", logo: "https://crests.football-data.org/674.svg" },
-  { name: "Jong PSV", city: "Eindhoven", logo: "https://crests.football-data.org/678.svg" },
-  { name: "Jong FC Utrecht", city: "Utrecht", logo: "https://crests.football-data.org/683.svg" },
-  { name: "Jong AZ", city: "Alkmaar", logo: "https://crests.football-data.org/676.svg" },
+  { name: "ADO Den Haag", city: "Den Haag", color: "006400" },
+  { name: "Almere City", city: "Almere", color: "cc0000" },
+  { name: "SC Cambuur", city: "Leeuwarden", color: "cc9900" },
+  { name: "De Graafschap", city: "Doetinchem", color: "003399" },
+  { name: "FC Den Bosch", city: "Den Bosch", color: "cc0000" },
+  { name: "FC Dordrecht", city: "Dordrecht", color: "cc0000" },
+  { name: "FC Eindhoven", city: "Eindhoven", color: "003399" },
+  { name: "FC Emmen", city: "Emmen", color: "cc0000" },
+  { name: "Excelsior", city: "Rotterdam", color: "cc0000" },
+  { name: "Helmond Sport", city: "Helmond", color: "cc9900" },
+  { name: "MVV Maastricht", city: "Maastricht", color: "cc0000" },
+  { name: "Roda JC", city: "Kerkrade", color: "333333" },
+  { name: "Telstar", city: "Velsen-Zuid", color: "333333" },
+  { name: "TOP Oss", city: "Oss", color: "cc0000" },
+  { name: "VVV-Venlo", city: "Venlo", color: "cc9900" },
+  { name: "Vitesse", city: "Arnhem", color: "cc9900" },
+  { name: "Jong Ajax", city: "Amsterdam", color: "cc0000" },
+  { name: "Jong PSV", city: "Eindhoven", color: "cc0000" },
+  { name: "Jong FC Utrecht", city: "Utrecht", color: "cc0000" },
+  { name: "Jong AZ", city: "Alkmaar", color: "cc0000" },
 ];
 
 const INITIAL_SCORE = 501;
 const COLORS = ["#cc0000", "#0066cc", "#009933", "#ff9900"];
 
-function ClubLogo({ logo, name, size = 48 }) {
-  const [src, setSrc] = useState(logo || logoUrl(name));
-  const [failed, setFailed] = useState(false);
-
-  const handleError = () => {
-    if (!failed) {
-      setFailed(true);
-      setSrc(logoUrl(name));
-    }
-  };
-
+function ClubLogo({ color = "cc0000", name, size = 48 }) {
+  const initials = name.replace(/^(FC |SC |NAC |PEC |RKC |ADO )/, "").substring(0, 2).toUpperCase();
   return (
-    <img
-      src={src}
-      alt={name}
-      onError={handleError}
-      style={{ width: size, height: size, objectFit: "contain", flexShrink: 0, borderRadius: 4 }}
-    />
+    <div style={{
+      width: size, height: size, borderRadius: "50%",
+      background: `#${color}`,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      fontSize: size * 0.33, fontWeight: 900, color: "#fff",
+      flexShrink: 0, letterSpacing: -1, fontFamily: "system-ui, sans-serif"
+    }}>
+      {initials}
+    </div>
   );
 }
 
@@ -126,7 +117,7 @@ function PlayersSetup({ club, onStart, onCancel }) {
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
       <div style={{ background: "#1a1a1a", border: "1px solid #333", borderRadius: 12, padding: 0, maxWidth: 400, width: "100%", overflow: "hidden" }}>
         <div style={{ background: "#cc0000", padding: "18px 24px", display: "flex", alignItems: "center", gap: 14 }}>
-          <ClubLogo logo={club.logo} name={club.name} size={44} />
+          <ClubLogo color={club.color} name={club.name} size={44} />
           <div>
             <div style={{ fontSize: 16, fontWeight: 900, color: "#fff" }}>{club.name}</div>
             <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", letterSpacing: 1 }}>SPELERS INSTELLEN</div>
@@ -364,7 +355,7 @@ of: {"valid":false,"matches":0,"shirt":null,"fact":""}` ;
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "#cc0000"; e.currentTarget.style.background = "#1a0000"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "#222"; e.currentTarget.style.background = "#111"; }}
                 >
-                  <ClubLogo logo={club.logo} name={club.name} size={52} />
+                  <ClubLogo color={club.color} name={club.name} size={52} />
                   <div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{club.name}</div>
                     <div style={{ fontSize: 10, color: "#555", marginTop: 2 }}>{club.city}</div>
@@ -383,7 +374,7 @@ of: {"valid":false,"matches":0,"shirt":null,"fact":""}` ;
             <div style={{ maxWidth: 540, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 56 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 
-                <ClubLogo logo={selectedClub.logo} name={selectedClub.name} size={28} />
+                <ClubLogo color={selectedClub.color} name={selectedClub.name} size={28} />
                 <div style={{ color: "#fff", fontWeight: 900, fontSize: 14, letterSpacing: 1 }}>{selectedClub.name.toUpperCase()}</div>
               </div>
               <button onClick={() => setScreen("club")} style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: 6, color: "#fff", fontSize: 12, fontWeight: 700, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit" }}>
